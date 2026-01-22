@@ -9,7 +9,13 @@ IMG_HEIGHT = 224
 IMG_WIDTH = 224
 BATCH_SIZE = 32
 EPOCHS = 20
-DATA_DIR = '../data'  # Assuming running from tracefake/models/
+
+# Robustly find data dir regardless of where command is called from
+# Script is in tracefake/models/train_model.py
+# Data is in tracefake/data
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(BASE_DIR, 'data')
+
 MODEL_SAVE_DIR = 'saved_model'
 MODEL_NAME = 'tracefake_v1.h5'
 
@@ -36,7 +42,7 @@ def train():
     # Load Data
     print("Loading Data...")
     train_generator = train_datagen.flow_from_directory(
-        DATA_DIR, # Point to parent 'data' if using classes subfolders directly inside
+        train_dir, # Point specificially to 'data/train' which contains 'REAL' and 'FAKE'
         target_size=(IMG_HEIGHT, IMG_WIDTH),
         batch_size=BATCH_SIZE,
         class_mode='binary',
@@ -44,7 +50,7 @@ def train():
     )
 
     val_generator = train_datagen.flow_from_directory(
-        DATA_DIR,
+        train_dir,
         target_size=(IMG_HEIGHT, IMG_WIDTH),
         batch_size=BATCH_SIZE,
         class_mode='binary',

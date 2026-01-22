@@ -1,0 +1,21 @@
+# Virtual Environment
+venv/
+env/
+.env
+
+# Python Cache
+__pycache__/
+*.py[cod]
+
+# Dataset (Too large for Git)
+tracefake/data/
+data/
+
+# Trained Models (Large binary files)
+# You might want to version control small models, but usually not large ones >100MB
+# tracefake/models/saved_model/*.h5
+# Uncomment above if you don't want to push the model either
+
+# IDE settings
+.vscode/
+.idea/
